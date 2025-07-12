@@ -25,14 +25,17 @@ This project is designed to automate end-to-end testing for a web application us
    cd <repository-folder>
 
 2. Create a virtual environment:
+   ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-3. Install dependencies:
+4. Install dependencies:
+   ```bash
    pip install -r requirements.txt
 
-4. Running Tests
+6. Running Tests
    Run the end-to-end tests:
+      ```bash
       pytest test/test_e2e.py
 
 
