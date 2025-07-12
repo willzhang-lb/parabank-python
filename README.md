@@ -3,6 +3,9 @@
 ## Overview
 This project is designed to automate end-to-end testing for a web application using Python and Playwright. It includes functionalities such as user registration, account creation, fund transfer, bill payment, and transaction search.
 
+## Structure
+├── pages │ ├── base_page.py │ ├── home_page.py ├── test │ ├── test_e2e.py ├── utils │ ├── load_json_file_info.py │ ├── dump_to_json.py ├── requirements.txt ├── member_info.json ├── conftest.py └── README.md
+   
 ## Features
 - **User Registration**: Automates the registration process and verifies success.
 - **Account Management**: Opens new accounts and verifies account details.
@@ -15,10 +18,21 @@ This project is designed to automate end-to-end testing for a web application us
 - **Framework**: Playwright
 - **Dependency Management**: pip
 
-## Project Structure
-
 ## Installation
 1. Clone the repository:
    ```bash
    git clone <repository-url>
    cd <repository-folder>
+
+2. Create a virtual environment:
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+3. Install dependencies:
+   pip install -r requirements.txt
+
+4. Running Tests
+   Run the end-to-end tests:
+      pytest test/test_e2e.py
+
+
