@@ -27,7 +27,7 @@ class BasePage:
         self.click_button('Log In')
 
     def verify_title_correct(self, expected_title: str):
-        # Verify that the registration was successful
+
         title = self.get_visible_title()
         print(title)
         assert title == expected_title, f"Displayed title {title} does not match expected title '{expected_title}'"
@@ -89,8 +89,6 @@ class BasePage:
         print(account_info)
         self.page.wait_for_selector('h1:has-text("Bill Payment Service")', state="visible")
         self.fill_form(bill_info)
-        # from_account_dropdown = self.right_panel.locator('tr').filter(has_text='From account').locator('select')
-        # from_account_dropdown.select_option(account_info['new account'])
         self.click_button('Send Payment')
         self.page.wait_for_selector('input[value="Send Payment"]', state="hidden")
 
@@ -109,8 +107,6 @@ class BasePage:
     def open_new_account(self, from_account: str = ''):
 
         self.right_panel.locator('#type').select_option('SAVINGS')
-        # self.page.wait_for_timeout(5000)
-        # # self.page.locator("#fromAccountId option").first.wait_for(state="visible")
         if from_account:
             self.right_panel.locator('#fromAccountId').select_option(from_account)
         else:
