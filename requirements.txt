@@ -1,0 +1,4 @@
+playwright~=1.53.0
+pytest~=8.4.1
+allure-python-commons~=2.14.3
+python-dotenv~=1.1.1
