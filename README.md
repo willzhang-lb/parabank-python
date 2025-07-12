@@ -4,10 +4,10 @@
 This project is designed to automate end-to-end testing for a web application using Python and Playwright. It includes functionalities such as user registration, account creation, fund transfer, bill payment, and transaction search.
 
 ## Structure
-├── pages 
+pages 
    ├── base_page.py
    ├── home_page.py 
-├── test │ 
+test 
    ├── test_e2e.py 
 ├── utils 
 ├── requirements.txt 
