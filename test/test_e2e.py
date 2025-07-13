@@ -10,6 +10,7 @@ from pages.find_transactions_page import FindTransactionsPage
 
 class TestEndToEnd:
 
+    # since login in function of parabank always fails, so I merge tests into one test file
     def test_e2e(self, page):
         home_page = HomePage(page)
         login_page = LoginPage(page)
@@ -31,6 +32,7 @@ class TestEndToEnd:
         open_account_page.verify_title_correct('Account Opened!')
         new_account = open_account_page.save_new_account_number()
         home_page.click_left_menu('Accounts Overview')
+        home_page.verify_title_correct('Accounts Overview')
         account_overview_page.verify_account_balance(new_account, '100')
 
         home_page.click_left_menu('Transfer Funds')
