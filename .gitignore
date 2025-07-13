@@ -1,6 +1,4 @@
 __pycache__/
 trace/
-account_info.json
-bill_info.json
-member_info.json
+*.json
 .idea/

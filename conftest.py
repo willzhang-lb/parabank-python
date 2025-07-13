@@ -1,15 +1,8 @@
-import json
 import logging
 import os
-import time
-
 import playwright
 import pytest
-
-import allure
-import pytest
 from playwright.sync_api import expect, Playwright
-from test import *
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -23,7 +16,7 @@ def pytest_runtest_makereport(item, call):
     setattr(item, f"rep_{call.when}", rep)
 
 @pytest.fixture(scope='function')
-def authed_context(playwright, request):
+def context(playwright, request):
     # Launch browser in headed mode
     browser = playwright.chromium.launch(headless=False, args=["--start-fullscreen"])
     context = browser.new_context()
@@ -52,8 +45,8 @@ def authed_context(playwright, request):
     browser.close()
 
 @pytest.fixture(scope='function')
-def page(authed_context):
-    page = authed_context.new_page()
+def page(context):
+    page = context.new_page()
     yield page
     page.close()
 
