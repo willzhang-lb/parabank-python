@@ -3,3 +3,4 @@ trace/
 account_info.json
 bill_info.json
 member_info.json
+.idea/
