@@ -17,7 +17,7 @@ This project is designed to automate end-to-end testing for a web application us
 
 
 **Set up local project**
-```bash
+```shell
 $ git clone https://github.com/lifebyte-systems/CRM-UI-Automation.git
 $ cd CRM-UI-Automation
 $ pip install -r requirements.txt
@@ -31,9 +31,10 @@ python -m venv venv
 **Install playwright**
 ```shell
 playwright install
+```
 
 **Run test**
-   ```bash
-   pytest test/test_e2e.py
-
+```shell
+pytest test/test_e2e.py
+```
 
