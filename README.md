@@ -15,24 +15,25 @@ This project is designed to automate end-to-end testing for a web application us
 - **Framework**: Playwright
 - **Dependency Management**: pip
 
-## Installation
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd <repository-folder>
 
-2. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+**Set up local project**
+```bash
+$ git clone https://github.com/lifebyte-systems/CRM-UI-Automation.git
+$ cd CRM-UI-Automation
+$ pip install -r requirements.txt
+```
 
-4. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
+**Create virtual environment**
+```shell
+python -m venv venv
+```
 
-6. Running Tests
-   Run the end-to-end tests:
-      ```bash
-      pytest test/test_e2e.py
+**Install playwright**
+```shell
+playwright install
+
+**Run test**
+   ```bash
+   pytest test/test_e2e.py
 
 
