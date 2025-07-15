@@ -35,6 +35,6 @@ playwright install
 
 **Run test**
 ```shell
-pytest test/test_e2e.py
+pytest test/
 ```
 
