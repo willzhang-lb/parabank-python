@@ -10,7 +10,6 @@ class BillPayPage(BasePage):
         bill_info = load_json_file_info('bill_info.json')
         account_info = load_json_file_info('account_info.json')
         bill_info['From account'] = account_info['new account']
-        print(account_info)
         self.page.wait_for_selector('h1:has-text("Bill Payment Service")', state="visible")
         self.fill_form(bill_info)
         self.click_button('Send Payment')

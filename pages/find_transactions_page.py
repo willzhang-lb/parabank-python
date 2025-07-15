@@ -1,6 +1,11 @@
 from pages.base_page import BasePage
 from utils import generate_username, dump_to_json, load_json_file_info
+import os
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
+BASE_URL = os.getenv("BASE_URL")
 
 class FindTransactionsPage(BasePage):
     def __init__(self, page):
@@ -35,3 +40,4 @@ class FindTransactionsPage(BasePage):
         self.right_panel.get_by_role('button', name='Find Transactions').first.wait_for(state="hidden")
         print(response_info)
         print(response_info.value)
+

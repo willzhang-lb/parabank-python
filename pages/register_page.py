@@ -1,10 +1,15 @@
+import os
 from pages.base_page import BasePage
 from utils import generate_username, dump_to_json, load_json_file_info
-
+from dotenv import load_dotenv
+# Load environment variables from .env file
+load_dotenv()
+BASE_URL = os.getenv('BASE_URL')
 
 class RegisterPage(BasePage):
     def __init__(self, page):
         super().__init__(page)
+        page.goto(f"{BASE_URL}/register.htm")
 
     def fill_register_info(self):
         dump_to_json('member_info.json', 'Username', self.random_username)
