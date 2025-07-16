@@ -30,3 +30,15 @@ def load_json_file_info(file_name: str):
         member_info = json.load(file)
 
     return member_info
+
+
+def get_html_tag_of_node(locator) -> str:
+    """
+    Get the HTML tag of the node specified by the selector.
+    :return: The HTML tag name of the node.
+    """
+    element_handle = locator
+    if element_handle:
+        return element_handle.evaluate("node => node.tagName")
+    else:
+        raise ValueError(f"No element found")

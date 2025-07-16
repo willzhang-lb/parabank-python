@@ -53,7 +53,6 @@ def api_request_context(playwright: Playwright):
                 cookie_list.append(f"{c['name']}={c['value']}")
         if cookie_list:
             extra_headers["Cookie"] = "; ".join(cookie_list)
-        print(extra_headers)
     request_context = playwright.request.new_context(
         base_url=BASE_URL,
         extra_http_headers=extra_headers,

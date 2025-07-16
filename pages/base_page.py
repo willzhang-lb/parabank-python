@@ -1,9 +1,9 @@
 import os
 from dotenv import load_dotenv
 from playwright.sync_api import Page
-from utils import generate_username, dump_to_json, load_json_file_info
+from utils import generate_username, get_html_tag_of_node
 
-
+load_dotenv()
 random_username = generate_username()
 
 class BasePage:
@@ -12,13 +12,13 @@ class BasePage:
         self.left_panel = self.page.locator('#leftPanel')
         self.right_panel = self.page.locator('#rightPanel')
         self.random_username = generate_username()
+        self.base_url = os.getenv('BASE_URL')
 
     def navigate_to_home_page(self):
-        load_dotenv()
-        url = os.getenv('BASE_URL')  # Get the URL from the .env file
-        if not url:
+
+        if not self.base_url:
             raise ValueError("BASE_URL is not set in the .env file")
-        self.page.goto(url)
+        self.page.goto(self.base_url)
 
     def verify_title_correct(self, expected_title: str):
 
@@ -49,7 +49,7 @@ class BasePage:
         for key, value in form_data.items():
             row = self.right_panel.locator('tr').filter(has_text=key).first
             target_field = row.locator('td:nth-child(2) > *')
-            if self.get_html_tag_of_node(target_field) == 'INPUT':
+            if get_html_tag_of_node(target_field) == 'INPUT':
                 target_field.fill(value)
             elif target_field.get_attribute('class') == 'SELECT':
                 target_field.select_option(value)
@@ -68,17 +68,6 @@ class BasePage:
             raise ValueError(f"Button with text '{button_text}' is not visible on the page.")
 
 
-    # Python
-    def get_html_tag_of_node(self, locator) -> str:
-        """
-        Get the HTML tag of the node specified by the selector.
-        :return: The HTML tag name of the node.
-        """
-        element_handle = locator
-        if element_handle:
-            return element_handle.evaluate("node => node.tagName")
-        else:
-            raise ValueError(f"No element found")
 
 
 
