@@ -28,8 +28,6 @@ def pytest_runtest_makereport(item, call):
 def member_storage(context):
     """Ensure valid member_storage.json exists"""
     member_info = load_json_file_info("member_info.json")
-    username = member_info["Username"]
-    password = member_info["Password"]
     page = context.new_page()
     page.goto(f"{BASE_URL}/overview.htm")
     if page.locator('//h1[contains(text(), "Accounts Overview")]').is_visible():
@@ -43,7 +41,7 @@ def member_storage(context):
         page.close()
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session")
 def api_request_context(playwright: Playwright):
     extra_headers = {}
 
