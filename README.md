@@ -19,7 +19,7 @@ This project is designed to automate end-to-end testing for a web application us
 **Set up local project**
 ```shell
 $ git clone https://github.com/lifebyte-systems/CRM-UI-Automation.git
-$ cd CRM-UI-Automation
+$ cd parabank
 $ pip install -r requirements.txt
 ```
 
@@ -35,6 +35,21 @@ playwright install
 
 **Run test**
 ```shell
-pytest test/
+pytest
 ```
 
+**Project Structure**
+```
+
+├───member_storage.json
+├───member_info.json
+├───account_info.json
+├───bill_info.json
+├───README.md
+├───conftest.py
+├───utils.py
+├───.env
+├───requirements.txt            #dependencies
+├───api                         #api object directory
+├───pages                       #page object directory
+├───test                        #test case directory
