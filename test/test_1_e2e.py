@@ -21,7 +21,6 @@ def test_e2e(page):
 
     register_page.fill_register_info()
     register_page.verify_register_success()
-
     home_page.click_left_menu('Open New Account')
     open_account_page.verify_title_correct('Open New Account')
     open_account_page.open_new_account()
@@ -46,9 +45,3 @@ def test_e2e(page):
     find_transactions_page.verify_title_correct('Find Transactions')
     find_transactions_page.find_transaction_by_category('transaction_amount', transfer_amount)
     find_transactions_page.verify_title_correct('Transaction Results')
-
-
-
-
-
-
