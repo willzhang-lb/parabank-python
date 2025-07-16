@@ -27,8 +27,8 @@ def test_e2e(page):
     open_account_page.verify_title_correct('Account Opened!')
     new_account = open_account_page.save_new_account_number()
     home_page.click_left_menu('Accounts Overview')
-    home_page.verify_title_correct('Accounts Overview')
-    account_overview_page.verify_account_balance(new_account, '100')
+    account_overview_page.verify_title_correct('Accounts Overview')
+    account_overview_page.verify_account_balance(new_account, '1000000.00')
 
     home_page.click_left_menu('Transfer Funds')
     transfer_funds_page.verify_title_correct('Transfer Funds')
