@@ -19,7 +19,7 @@ This project is designed to automate end-to-end testing for a web application us
 **Set up local project**
 ```shell
 $ git clone https://github.com/lifebyte-systems/CRM-UI-Automation.git
-$ cd CRM-UI-Automation
+$ cd parabank
 $ pip install -r requirements.txt
 ```
 
