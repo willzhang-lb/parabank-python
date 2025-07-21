@@ -26,7 +26,7 @@ def pytest_runtest_makereport(item, call):
     setattr(item, f"rep_{call.when}", rep)
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def member_storage(context):
     """Ensure valid member_storage.json exists"""
     member_info = load_json_file_info("member_info.json")
@@ -73,32 +73,39 @@ def browser(playwright):
     browser.close()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def context(browser, request):
-    context = None
-
-    # Try using the existing session
     context = browser.new_context(storage_state=STORAGE_PATH)
 
+    # Start tracing
+    context.tracing.start(screenshots=True, snapshots=True, sources=True)
+
     yield context
-    # Get test outcome
-    rep = getattr(request.node, "rep_call", None)
+
+
 
     # Create trace directory
     trace_folder = os.path.join(os.getcwd(), 'trace')
     os.makedirs(trace_folder, exist_ok=True)
     trace_file = os.path.join(trace_folder, f"trace_{request.node.name}.zip")
 
-    if rep and rep.failed:
-        logging.info("Test failed. Saving trace file...")
-        context.tracing.stop(path=trace_file)
-        logging.info(f"Trace file saved at: {trace_file}")
-    else:
+    try:
+        # Get test outcome
+        rep = getattr(request.node, "rep_call", None)
+
+        if rep and rep.failed:
+            context.tracing.stop(path=trace_file)
+        else:
+            context.tracing.stop()
+    except Exception as e:
+        logging.error(f"Error while stopping tracing: {e}")
+        # Ensure tracing is stopped even if an error occurs
         context.tracing.stop()
-    context.close()
+    finally:
+        context.close()
 
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def page(context):
     page = context.new_page()
     page.goto(BASE_URL)
