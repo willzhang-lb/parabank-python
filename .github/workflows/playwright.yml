@@ -30,7 +30,7 @@ jobs:
       run: python -m playwright install
 
     - name: Run Tests
-      run: pytest -v -m --headless=True --tracing=retain-on-failure test/
+      run: pytest -v --headless=True --tracing=retain-on-failure test/
       env:
         CI: true
 
