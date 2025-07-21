@@ -65,7 +65,8 @@ async def playwright_instance():
 
 @pytest.fixture(scope="session")
 def browser(playwright):
-    browser = playwright.chromium.launch(headless=False)
+    is_ci = os.getenv("CI", "false").lower() == "true"
+    browser = playwright.chromium.launch(headless=is_ci)
     yield browser
     browser.close()
 
