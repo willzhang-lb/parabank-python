@@ -95,7 +95,3 @@ def test_find_transactions(page):
     find_transactions_page.verify_title_correct('Find Transactions')
     find_transactions_page.find_transaction_by_category('transaction_amount', transfer_amount)
     find_transactions_page.verify_title_correct('Transaction Results')
-
-def test_force_failure():
-    """Test to force a failure for demonstration purposes."""
-    assert False, "This is a forced failure for testing purposes."
