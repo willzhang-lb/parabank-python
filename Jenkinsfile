@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers {
+        cron('0 14 * * *')  // Runs daily at 2:00 PM
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -30,6 +34,9 @@ pipeline {
 
     post {
     always {
+        // Archive the Playwright report
+        archiveArtifacts artifacts: 'report/playwright-report.html', fingerprint: true
+
         // Archive all files under trace/ folder
         archiveArtifacts artifacts: 'trace/**', fingerprint: true
         }

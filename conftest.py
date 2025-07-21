@@ -1,6 +1,8 @@
 import json
 import logging
 import os
+from datetime import datetime
+
 import playwright
 import pytest
 from playwright.async_api import async_playwright
@@ -103,4 +105,12 @@ def page(context):
     yield page
     page.close()
 
+def pytest_configure(config):
+    report_dir = "report"
+    report_file = f"report/playwright-report.html"
 
+    # Ensure the report directory exists
+    os.makedirs(report_dir, exist_ok=True)
+
+    # Add the HTML report path to pytest options
+    config.option.htmlpath = report_file

@@ -3,3 +3,4 @@ trace/
 .idea/
 *.json
 browserstack.yml
+report/
