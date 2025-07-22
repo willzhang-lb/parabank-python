@@ -112,12 +112,3 @@ def page(context):
     yield page
     page.close()
 
-def pytest_configure(config):
-    report_dir = os.path.join(os.getcwd(), 'report')
-    report_file = os.path.join(report_dir, "playwright-report.html")
-
-    # Ensure the report directory exists
-    os.makedirs(report_dir, exist_ok=True)
-
-    # Add the HTML report path to pytest options
-    config.option.htmlpath = report_file
