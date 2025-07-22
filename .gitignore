@@ -3,3 +3,4 @@ trace/
 .idea/
 browserstack.yml
 report/
+allure-results/
