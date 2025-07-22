@@ -29,7 +29,7 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture(scope="function", autouse=True)
 def member_storage(context):
     """Ensure valid member_storage.json exists"""
-    member_info = load_json_file_info("member_info.json")
+    member_info = load_json_file_info("data/member_info.json")
     page = context.new_page()
     page.goto(f"{BASE_URL}/overview.htm")
     if page.locator('//h1[contains(text(), "Accounts Overview")]').is_visible():

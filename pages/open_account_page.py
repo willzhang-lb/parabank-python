@@ -20,7 +20,7 @@ class OpenAccountPage(BasePage):
 
     def save_new_account_number(self):
         self.new_account_id = self.right_panel.locator('#newAccountId').text_content()
-        dump_to_json('account_info.json', 'new account', self.new_account_id)
+        dump_to_json('data/account_info.json', 'new account', self.new_account_id)
         return self.new_account_id
 
     def get_new_account_balance(self):

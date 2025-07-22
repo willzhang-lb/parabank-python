@@ -10,8 +10,8 @@ class RegisterPage(BasePage):
         page.goto(f"{self.base_url}/register.htm")
 
     def fill_register_info(self):
-        dump_to_json('member_info.json', 'Username', self.random_username)
-        member_info = load_json_file_info('member_info.json')
+        dump_to_json('data/member_info.json', 'Username', self.random_username)
+        member_info = load_json_file_info('data/member_info.json')
         self.page.wait_for_selector('h1:has-text("Signing up is easy!")', state="visible")
         self.fill_form(member_info)
         self.click_button('Register')

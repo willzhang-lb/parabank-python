@@ -45,15 +45,12 @@ pytest
 **Project Structure**
 ```
 
-├───member_storage.json
-├───member_info.json
-├───account_info.json
-├───bill_info.json
-├───README.md
-├───conftest.py
-├───utils.py
-├───.env
-├───requirements.txt            #dependencies
-├───api                         #api object directory
-├───pages                       #page object directory
-├───test                        #test case directory
+├───.github
+│   └───workflows
+├───api
+├───data
+├───pages
+├───test
+├───trace
+├───allure-report
+

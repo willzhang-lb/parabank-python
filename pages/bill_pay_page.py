@@ -7,8 +7,8 @@ class BillPayPage(BasePage):
         super().__init__(page)
 
     def fill_bill_info(self):
-        bill_info = load_json_file_info('bill_info.json')
-        account_info = load_json_file_info('account_info.json')
+        bill_info = load_json_file_info('data/bill_info.json')
+        account_info = load_json_file_info('data/account_info.json')
         bill_info['From account'] = account_info['new account']
         self.page.wait_for_selector('h1:has-text("Bill Payment Service")', state="visible")
         self.fill_form(bill_info)
