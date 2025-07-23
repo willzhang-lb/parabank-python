@@ -1,55 +1,38 @@
 pipeline {
     agent any
 
-    triggers {
-        cron('0 14 * * *')  // Runs daily at 2:00 PM
-    }
-
     environment {
         PYTHON_VERSION = '3.11'
         ALLURE_VERSION = '2.27.0'
     }
-    options {
-        timeout(time: 60, unit: 'MINUTES')
+
+    triggers {
+        cron('H 14 * * *')  // Runs daily at 2:00 PM
     }
+
     stages {
-
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Set up Python') {
             steps {
-                sh '''
-                    sudo apt update
-                    sudo apt install -y python3 python3-pip python3-venv wget tar unzip curl
-                    python3 -m venv venv
-                    source venv/bin/activate
-                    python3 -m pip install --upgrade pip
+                bat '''
+                    python -m pip install --upgrade pip
                     pip install -r requirements.txt
                     playwright install
                 '''
             }
         }
 
-        stage('Install Allure CLI') {
+        stage('Download and Unzip Allure CLI') {
             steps {
-                sh '''
-                    wget https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz
-                    tar -zxvf allure-${ALLURE_VERSION}.tgz
-                    sudo mv allure-${ALLURE_VERSION} /opt/allure
-                    sudo ln -sf /opt/allure/bin/allure /usr/bin/allure
-                    allure --version
+                bat '''
+                    curl -L -o allure.zip https://github.com/allure-framework/allure2/releases/download/%ALLURE_VERSION%/allure-%ALLURE_VERSION%.zip
+                    powershell -Command "Expand-Archive -Force 'allure.zip' ."
                 '''
             }
         }
 
         stage('Run Playwright Tests') {
             steps {
-                sh '''
-                    source venv/bin/activate
+                bat '''
                     pytest -v --alluredir=allure-results
                 '''
             }
@@ -57,7 +40,8 @@ pipeline {
 
         stage('Generate Allure Report') {
             steps {
-                sh '''
+                bat '''
+                    set PATH=%CD%\\allure-%ALLURE_VERSION%\\bin;%PATH%
                     allure generate allure-results --clean -o allure-report
                 '''
             }
