@@ -49,7 +49,7 @@ pipeline {
 
         stage('Archive Allure Report') {
             steps {
-                archiveArtifacts artifacts: 'allure-report/**', fingerprint: true
+                allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
 
