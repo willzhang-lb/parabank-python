@@ -1,7 +1,8 @@
 from api.find_transactions_api import TransactionsAPI
 from utils import load_json_file_info
 
-new_account = load_json_file_info('data/account_info.json')['new account']
+account_info = load_json_file_info('data/account_info.json')
+new_account = account_info['new account']
 
 def test_get_transactions(api_request_context):
     # Call the API endpoint

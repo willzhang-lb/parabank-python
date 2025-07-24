@@ -16,7 +16,7 @@ from utils import load_json_file_info
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 BASE_URL = os.getenv('BASE_URL')
-STORAGE_PATH = "member_storage.json"
+STORAGE_PATH = os.path.join(os.path.dirname(__file__), "member_storage.json")
 
 # Hook to capture test result
 @pytest.hookimpl(hookwrapper=True)
@@ -85,7 +85,7 @@ def context(browser, request):
 
 
     # Create trace directory
-    trace_folder = os.path.join(os.getcwd(), 'trace')
+    trace_folder = os.path.join(os.path.dirname(__file__), "trace/")
     os.makedirs(trace_folder, exist_ok=True)
     trace_file = os.path.join(trace_folder, f"trace_{request.node.name}.zip")
 

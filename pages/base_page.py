@@ -27,6 +27,7 @@ class BasePage:
         assert title == expected_title, f"Displayed title {title} does not match expected title '{expected_title}'"
 
     def get_visible_title(self):
+        self.page.wait_for_selector('#rightPanel', state='visible')
         titles = self.right_panel.locator('.title')
         count = titles.count()
 
