@@ -30,6 +30,12 @@ pipeline {
             }
         }
 
+        stage('Clean Trace Folder') {
+            steps {
+                bat 'if exist trace (rmdir /s /q trace)'
+            }
+        }
+
         stage('Run Playwright Tests') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
