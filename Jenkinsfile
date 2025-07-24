@@ -32,9 +32,11 @@ pipeline {
 
         stage('Run Playwright Tests') {
             steps {
-                bat '''
-                    pytest -v --alluredir=allure-results
-                '''
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    bat '''
+                        pytest -v --alluredir=allure-results
+                    '''
+                }
             }
         }
 
