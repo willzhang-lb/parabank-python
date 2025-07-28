@@ -27,11 +27,6 @@ $ cd parabank
 $ pip install -r requirements.txt
 ```
 
-**Create virtual environment**
-```shell
-python -m venv venv
-```
-
 **Install playwright**
 ```shell
 playwright install
