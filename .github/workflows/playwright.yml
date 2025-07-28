@@ -32,8 +32,11 @@ jobs:
     - name: Run Playwright Tests
       run: pytest -v --alluredir=allure-results || true
 
-    - name: Generate Allure Report
-      run: allure generate allure-results --clean -o allure-report
+    - name: Generate Allure report
+      uses: simple-elf/allure-report-action@master
+      if: always()
+      with:
+        allure_results: allure-results
 
     - name: Upload Allure Report as artifact
       if: always()
