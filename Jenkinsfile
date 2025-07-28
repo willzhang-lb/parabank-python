@@ -10,8 +10,10 @@ pipeline {
         cron('H 14 * * *')  // Runs daily at 2:00 PM
     }
 
+
+
     stages {
-        stage('Set up Python') {
+        stage('Install Depemdencies') {
             steps {
                 bat '''
                     python -m pip install --upgrade pip
