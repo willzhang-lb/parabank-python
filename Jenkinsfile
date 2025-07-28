@@ -23,15 +23,6 @@ pipeline {
             }
         }
 
-        stage('Download and Unzip Allure CLI') {
-            steps {
-                bat '''
-                    curl -L -o allure.zip https://github.com/allure-framework/allure2/releases/download/%ALLURE_VERSION%/allure-%ALLURE_VERSION%.zip
-                    powershell -Command "Expand-Archive -Force 'allure.zip' ."
-                '''
-            }
-        }
-
         stage('Clean Trace Folder') {
             steps {
                 bat 'if exist trace (rmdir /s /q trace)'
