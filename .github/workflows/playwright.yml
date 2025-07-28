@@ -24,13 +24,14 @@ jobs:
         pip install -r requirements.txt
         python -m playwright install
 
-    - name: Install Allure CLI
+    - name: Install Allure CLI (User-level)
       run: |
+        apt-get update && apt-get install -y wget tar
         wget https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
         tar -zxvf allure-2.27.0.tgz
-        sudo mv allure-2.27.0 /opt/allure
-        sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+        echo "$PWD/allure-2.27.0/bin" >> $GITHUB_PATH
         allure --version
+
 
     - name: Run Playwright Tests
       run: |
