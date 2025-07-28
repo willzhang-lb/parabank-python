@@ -2,13 +2,14 @@ import json
 import logging
 import os
 from datetime import datetime
-
 import playwright
 import pytest
 from playwright.async_api import async_playwright
 from playwright.sync_api import expect, Playwright, sync_playwright
 from dotenv import load_dotenv
 from pathlib import Path
+
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -59,16 +60,12 @@ def api_request_context(playwright: Playwright):
     yield request_context
     request_context.dispose()
 
-@pytest.fixture(scope="session")
-async def playwright_instance():
-    async with async_playwright() as playwright:
-        yield playwright
-
 
 @pytest.fixture(scope="session")
 def browser(playwright):
     is_ci = os.getenv("CI", "false").lower() == "true"
-    browser = playwright.chromium.launch(headless=is_ci)
+    browser = playwright.chromium.launch(headless=is_ci,
+                                         args=["--disable-gpu", "--no-sandbox"]  )
     yield browser
     browser.close()
 
@@ -81,8 +78,6 @@ def context(browser, request):
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
 
     yield context
-
-
 
     # Create trace directory
     trace_folder = os.path.join(os.path.dirname(__file__), "trace/")
@@ -111,4 +106,6 @@ def page(context):
     page.goto(BASE_URL)
     yield page
     page.close()
+
+
 
