@@ -1,13 +1,8 @@
 pipeline {
-    agent {
-        docker {
-            image 'mcr.microsoft.com/playwright/python:v1.53.0-noble'
-        }
-    }
+    agent any
 
     environment {
-        ALLURE_HOME = "${WORKSPACE}/allure-${ALLURE_VERSION}"
-        PATH = "${env.PATH}:${env.ALLURE_HOME}/bin"
+        PYTHON_VERSION = '3.11'
         ALLURE_VERSION = '2.27.0'
     }
 
@@ -16,17 +11,12 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Install dependencies') {
+        stage('Set up Python') {
             steps {
                 bat '''
                     python -m pip install --upgrade pip
                     pip install -r requirements.txt
+                    playwright install
                 '''
             }
         }
@@ -34,10 +24,8 @@ pipeline {
         stage('Download and Unzip Allure CLI') {
             steps {
                 bat '''
-                    apt-get update
-                    apt-get install -y wget tar openjdk-11-jre
-                    wget https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz
-                    tar -zxvf allure-${ALLURE_VERSION}.tgz
+                    curl -L -o allure.zip https://github.com/allure-framework/allure2/releases/download/%ALLURE_VERSION%/allure-%ALLURE_VERSION%.zip
+                    powershell -Command "Expand-Archive -Force 'allure.zip' ."
                 '''
             }
         }
@@ -52,7 +40,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     bat '''
-                        pytest -v --alluredir=allure-results || true
+                        pytest -v --alluredir=allure-results
                     '''
                 }
             }
@@ -61,7 +49,8 @@ pipeline {
         stage('Generate Allure Report') {
             steps {
                 bat '''
-                    ${ALLURE_HOME}/bin/allure generate allure-results --clean -o allure-report
+                    set PATH=%CD%\\allure-%ALLURE_VERSION%\\bin;%PATH%
+                    allure generate allure-results --clean -o allure-report
                 '''
             }
         }
@@ -74,7 +63,7 @@ pipeline {
 
         stage('Archive Playwright Traces') {
             when {
-                expression { return fileExists('trace') }
+                expression { fileExists('trace') }
             }
             steps {
                 archiveArtifacts artifacts: 'trace/**', allowEmptyArchive: true
