@@ -30,7 +30,8 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run Playwright Tests
-      run: pytest -v --alluredir=allure-results || true
+      run: pytest -v --alluredir=allure-results
+      continue-on-error: true  # Let the job continue even if this step fails
 
     - name: Generate Allure report
       uses: simple-elf/allure-report-action@master
