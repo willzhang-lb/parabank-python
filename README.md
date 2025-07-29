@@ -22,14 +22,9 @@ API automation
 
 **Set up local project**
 ```shell
-$ git clone https://github.com/lifebyte-systems/CRM-UI-Automation.git
+$ git clone https://github.com/willzhang-lb/parabank.git
 $ cd parabank
 $ pip install -r requirements.txt
-```
-
-**Create virtual environment**
-```shell
-python -m venv venv
 ```
 
 **Install playwright**

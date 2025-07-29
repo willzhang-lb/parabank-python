@@ -27,7 +27,7 @@ class OpenAccountPage(BasePage):
         balance_text = self.right_panel.locator('p:below(#type)').text_content()
         # Regular expression to match a monetary value
 
-        match = re.search(r"\$\s*([\d,]+(?:\.\d{2})?)", balance_text)
+        match = re.search(r"\$([\d,]+(?:\.\d{2})?)", balance_text)
         if match:
             # Remove commas and convert to float
             amount_str = match.group(1).replace(',', '')
