@@ -26,11 +26,11 @@ class OpenAccountPage(BasePage):
     def get_new_account_balance(self):
         balance_text = self.right_panel.locator('p:below(#type)').text_content()
         # Regular expression to match a monetary value
-        match = re.search(r"\$([0-9]+(?:\.[0-9]{2})?)", balance_text)
 
+        match = re.search(r"\$\s*([\d,]+(?:\.\d{2})?)", balance_text)
         if match:
-            amount = match.group(1)  # Convert the matched value to a float
-            print(amount)  # Output: 100.0
-            return amount
+            # Remove commas and convert to float
+            amount_str = match.group(1).replace(',', '')
+            return float(amount_str)
         else:
             print("No monetary value found.")
