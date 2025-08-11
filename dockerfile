@@ -14,4 +14,4 @@ RUN playwright install
 # Set environment variables
 ENV CI=true
 
-CMD ["pytest", "-v", "--maxfail=1", "--disable-warnings"]
+CMD ["pytest", "-v", "--env", "qa", "--maxfail=1", "--disable-warnings"]

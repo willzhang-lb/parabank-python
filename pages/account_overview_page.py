@@ -1,10 +1,9 @@
 from pages.base_page import BasePage
-from utils import generate_username, dump_to_json, load_json_file_info
 
 
 class AccountOverviewPage(BasePage):
-    def __init__(self, page):
-        super().__init__(page)
+    def __init__(self, page, base_url):
+        super().__init__(page, base_url)
 
     def verify_account_balance(self, account_id: str, expected_balance_value: str):
         self.table = self.right_panel.locator('#accountTable')

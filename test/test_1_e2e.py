@@ -10,15 +10,15 @@ from pages.find_transactions_page import FindTransactionsPage
 new_account = ''
 transfer_amount = '1'
 
-def test_register(page):
-    register_page = RegisterPage(page)
+def test_register(page, base_url):
+    register_page = RegisterPage(page, base_url)
     register_page.fill_register_info()
     register_page.verify_register_success()
 
-def test_open_new_account(page):
-    home_page = HomePage(page)
-    open_account_page = OpenAccountPage(page)
-    account_overview_page = AccountOverviewPage(page)
+def test_open_new_account(page, base_url):
+    home_page = HomePage(page, base_url)
+    open_account_page = OpenAccountPage(page, base_url)
+    account_overview_page = AccountOverviewPage(page, base_url)
     home_page.click_left_menu('Open New Account')
     open_account_page.verify_title_correct('Open New Account')
     new_account_balance = open_account_page.get_new_account_balance()
@@ -29,9 +29,9 @@ def test_open_new_account(page):
     account_overview_page.verify_title_correct('Accounts Overview')
     account_overview_page.verify_account_balance(new_account, new_account_balance)
 
-def test_transfer_fund(page):
-    home_page = HomePage(page)
-    transfer_funds_page = TransferFundsPage(page)
+def test_transfer_fund(page, base_url):
+    home_page = HomePage(page, base_url)
+    transfer_funds_page = TransferFundsPage(page, base_url)
 
     home_page.click_left_menu('Transfer Funds')
     transfer_funds_page.verify_title_correct('Transfer Funds')
@@ -39,18 +39,18 @@ def test_transfer_fund(page):
     transfer_funds_page.transfer_fund(first_account=new_account, transfer_amount=transfer_amount)
     transfer_funds_page.verify_title_correct('Transfer Complete!')
 
-def test_bill_pay(page):
-    home_page = HomePage(page)
-    bill_pay_page = BillPayPage(page)
+def test_bill_pay(page, base_url):
+    home_page = HomePage(page, base_url)
+    bill_pay_page = BillPayPage(page, base_url)
 
     home_page.click_left_menu('Bill Pay')
     bill_pay_page.verify_title_correct('Bill Payment Service')
     bill_pay_page.fill_bill_info()
     bill_pay_page.verify_title_correct('Bill Payment Complete')
 
-def test_find_transactions(page):
-    home_page = HomePage(page)
-    find_transactions_page = FindTransactionsPage(page)
+def test_find_transactions(page, base_url):
+    home_page = HomePage(page, base_url)
+    find_transactions_page = FindTransactionsPage(page, base_url)
 
     home_page.click_left_menu('Find Transactions')
     find_transactions_page.verify_title_correct('Find Transactions')

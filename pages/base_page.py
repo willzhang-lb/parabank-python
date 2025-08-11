@@ -7,17 +7,14 @@ load_dotenv()
 random_username = generate_username()
 
 class BasePage:
-    def __init__(self, page: Page):
+    def __init__(self, page: Page, base_url):
         self.page = page
         self.left_panel = self.page.locator('#leftPanel')
         self.right_panel = self.page.locator('#rightPanel')
         self.random_username = generate_username()
-        self.base_url = os.getenv('BASE_URL')
+        self.base_url = base_url
 
-    def navigate_to_home_page(self):
-
-        if not self.base_url:
-            raise ValueError("BASE_URL is not set in the .env file")
+    def navigate_to_home_page(self, url):
         self.page.goto(self.base_url)
 
     def verify_title_correct(self, expected_title: str):
