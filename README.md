@@ -25,7 +25,7 @@ API automation
 **Set up local project**
 ```shell
 $ git clone https://github.com/willzhang-lb/parabank.git
-$ cd parabank
+$ cd parabank-python
 $ pip install -r requirements.txt
 ```
 
