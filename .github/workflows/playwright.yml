@@ -30,7 +30,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run Playwright Tests
-      run: pytest -v --env qa--alluredir=allure-results
+      run: pytest -v --env qa --alluredir=allure-results
 
     - name: Generate Allure report
       uses: simple-elf/allure-report-action@master
