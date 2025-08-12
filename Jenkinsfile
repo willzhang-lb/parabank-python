@@ -33,7 +33,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     bat '''
-                        pytest -v --env qa --alluredir=allure-results
+                        pytest -v --env qa
                     '''
                 }
             }
