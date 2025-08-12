@@ -31,9 +31,7 @@ def get_env(request):
 @pytest.fixture(scope="session")
 def env_config(request, get_env):
     # get config file from different env
-    with open(f'config/{get_env}_config.json', 'r') as config_file:
-        config = json.load(config_file)
-    return config
+    return load_json_file_info(f'config/{get_env}_config.json')
 
 # Hook to capture test result
 @pytest.hookimpl(hookwrapper=True)
