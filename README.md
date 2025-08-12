@@ -2,7 +2,7 @@
 
 ## Overview
 This project is designed to automate end-to-end testing for a web application using Python and Playwright. It includes functionalities such as user registration, account creation, fund transfer, bill payment, and transaction search. In addition, CI/CD is integrated with github actions and Jenkins pipeline.
-Three environments are set up for testing: qa, staging, and prod. (only qa url is valid)
+Three environments are set up for testing: dev, qa, and prod. (only qa url is valid)
 
 ## Features
 UI Automation

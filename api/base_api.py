@@ -2,12 +2,8 @@ import os
 from dotenv import load_dotenv
 
 
-# Load environment variables from .env file
-load_dotenv()
-
-base_url = os.getenv('BASE_URL')
 
 class BaseAPI:
-    def __init__(self, request_context):
+    def __init__(self, request_context, env_config):
         self.request_context = request_context
-        self.base_url = base_url
+        self.base_url = env_config['Baseurl']

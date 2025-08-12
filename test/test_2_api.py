@@ -2,11 +2,11 @@ from api.find_transactions_api import TransactionsAPI
 from utils import load_json_file_info
 
 account_info = load_json_file_info('data/account_info.json')
-new_account = account_info['new account']
+new_account = account_info['New Account']
 
-def test_get_transactions(api_request_context):
+def test_get_transactions(api_request_context, env_config):
     # Call the API endpoint
-    tx_api = TransactionsAPI(api_request_context)
+    tx_api = TransactionsAPI(api_request_context, env_config)
     response = tx_api.get_transactions_by_amount(account_id=new_account, amount=1)
     print("Status:", response.status)
     print("Content-Type:", response.headers.get("content-type"))

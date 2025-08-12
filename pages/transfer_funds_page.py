@@ -3,8 +3,8 @@ from utils import generate_username, dump_to_json, load_json_file_info
 
 
 class TransferFundsPage(BasePage):
-    def __init__(self, page, base_url):
-        super().__init__(page, base_url)
+    def __init__(self, page, env_config):
+        super().__init__(page, env_config)
 
     def transfer_fund(self, first_account: str = '', second_account: str = '', transfer_amount: str = '0.01'):
         self.from_account_dropdown = self.right_panel.locator('#fromAccountId')

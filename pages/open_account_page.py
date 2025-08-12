@@ -5,8 +5,8 @@ from utils import generate_username, dump_to_json, load_json_file_info
 
 
 class OpenAccountPage(BasePage):
-    def __init__(self, page, base_url):
-        super().__init__(page, base_url)
+    def __init__(self, page, env_config):
+        super().__init__(page, env_config)
 
     def open_new_account(self, from_account: str = ''):
         self.right_panel.locator('#type').select_option('SAVINGS')
@@ -20,7 +20,7 @@ class OpenAccountPage(BasePage):
 
     def save_new_account_number(self):
         self.new_account_id = self.right_panel.locator('#newAccountId').text_content()
-        dump_to_json('data/account_info.json', 'new account', self.new_account_id)
+        dump_to_json('data/account_info.json', 'New Account', self.new_account_id)
         return self.new_account_id
 
     def get_new_account_balance(self):

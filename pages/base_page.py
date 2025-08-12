@@ -1,20 +1,21 @@
-import os
-from dotenv import load_dotenv
+
 from playwright.sync_api import Page
 from utils import generate_username, get_html_tag_of_node
 
-load_dotenv()
 random_username = generate_username()
 
 class BasePage:
-    def __init__(self, page: Page, base_url):
+    def __init__(self, page: Page, env_config):
         self.page = page
         self.left_panel = self.page.locator('#leftPanel')
         self.right_panel = self.page.locator('#rightPanel')
         self.random_username = generate_username()
-        self.base_url = base_url
+        self.base_url = env_config['Baseurl']
 
-    def navigate_to_home_page(self, url):
+    def navigate_to_home_page(self):
+
+        if not self.base_url:
+            raise ValueError("base url is not set in the file")
         self.page.goto(self.base_url)
 
     def verify_title_correct(self, expected_title: str):

@@ -1,22 +1,15 @@
 import json
 import logging
 import os
-from datetime import datetime
-import playwright
-import pytest
-from playwright.async_api import async_playwright
-from playwright.sync_api import expect, Playwright, sync_playwright
-from dotenv import load_dotenv
 from pathlib import Path
 
+import pytest
+from playwright.sync_api import expect, Playwright
 
-# Load environment variables from .env file
-load_dotenv()
 
 from utils import load_json_file_info
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-# BASE_URL = os.getenv('BASE_URL')
 STORAGE_PATH = os.path.join(os.path.dirname(__file__), "member_storage.json")
 
 def pytest_addoption(parser):
@@ -24,21 +17,23 @@ def pytest_addoption(parser):
         "--env",
         action="store",
         default="qa",
-        help="Environment to run tests against: dev/staging/prod"
+        help="Environment: dev, qa, prod"
     )
 
-@pytest.fixture(scope="session")
-def env(request):
-    return request.config.getoption("--env")
+@pytest.fixture(scope="session", autouse=True)
+def get_env(request):
+    env_value = request.config.getoption("--env")
+    if env_value not in ["dev", "qa", "prod"]:
+        raise ValueError("Invalid environment value")
+
+    return env_value
 
 @pytest.fixture(scope="session")
-def base_url(env):
-    env_map = {
-        "qa": "https://parabank.parasoft.com/parabank",
-        "staging": "https://google.com",
-        "prod": "https://example.com"
-    }
-    return env_map.get(env, "https://parabank.parasoft.com/parabank")
+def env_config(request, get_env):
+    # get config file from different env
+    with open(f'config/{get_env}_config.json', 'r') as config_file:
+        config = json.load(config_file)
+    return config
 
 # Hook to capture test result
 @pytest.hookimpl(hookwrapper=True)
@@ -49,8 +44,9 @@ def pytest_runtest_makereport(item, call):
 
 
 @pytest.fixture(scope="function", autouse=True)
-def member_storage(context, base_url):
+def member_storage(context, env_config):
     """Ensure valid member_storage.json exists"""
+    base_url = env_config['Baseurl']
     member_info = load_json_file_info("data/member_info.json")
     page = context.new_page()
     page.goto(f"{base_url}/overview.htm")
@@ -66,17 +62,18 @@ def member_storage(context, base_url):
 
 
 @pytest.fixture(scope="session")
-def api_request_context(playwright: Playwright, base_url):
+def api_request_context(playwright: Playwright, env_config):
+    base_url = env_config['Baseurl']
     extra_headers = {}
 
-    storage = json.loads(Path(STORAGE_PATH).read_text())
+    storage = load_json_file_info('member_storage.json')
     cookies = storage.get("cookies", [])
-
+    print(cookies)
     extra_headers["Cookie"] = cookies[0]['name'] + '=' + cookies[0]['value']
     request_context = playwright.request.new_context(
         base_url=base_url,
         extra_http_headers=extra_headers,
-        ignore_https_errors=True
+        ignore_https_errors=True,
     )
     yield request_context
     request_context.dispose()
@@ -122,11 +119,20 @@ def context(browser, request):
 
 
 @pytest.fixture(scope="function")
-def page(context, base_url):
+def page(context, env_config):
+    base_url = env_config['Baseurl']
     page = context.new_page()
     page.goto(base_url)
     yield page
     page.close()
 
 
-
+# def pytest_addoption(parser):
+#     parser.addoption("--envfile", action="store", default=".env", help="Environment file to load")
+#
+#
+# def pytest_configure(config):
+#     envfile = config.getoption("envfile")
+#     load_dotenv(dotenv_path=envfile)
+#     # global BASE_URL
+#     # BASE_URL = os.getenv('BASE_URL')
