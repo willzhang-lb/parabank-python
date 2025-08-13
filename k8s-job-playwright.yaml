@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: playwright-tests
+spec:
+  backoffLimit: 0 # Don't retry failed runs
+  template:
+    spec:
+      containers:
+        - name: playwright-python
+          image: your-dockerhub-user/playwright-python:latest
+          imagePullPolicy: Always
+          env:
+            - name: ENV
+              value: "qa"
+            - name: CI
+              value: "true"
+          command: ["pytest"]
+          args:
+            [
+              "-v",
+              "--env",
+              "qa",
+              "--maxfail=1",
+              "--disable-warnings"
+            ]
+      restartPolicy: Never

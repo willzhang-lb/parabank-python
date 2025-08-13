@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(name: 'ENV', choices: ['dev', 'qa', 'prod'], description: 'Test Environment')
+    }
+
     environment {
         PYTHON_VERSION = '3.11'
         ALLURE_VERSION = '2.27.0'
@@ -9,8 +13,6 @@ pipeline {
     triggers {
         cron('H 14 * * *')  // Runs daily at 2:00 PM
     }
-
-
 
     stages {
         stage('Install Depemdencies') {
@@ -33,7 +35,8 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     bat '''
-                        pytest -v --env qa
+                        echo "Running tests in %ENV% environment"
+                        pytest -v --env %ENV%
                     '''
                 }
             }
