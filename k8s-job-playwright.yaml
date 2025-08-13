@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: playwright-tests
 spec:
-  backoffLimit: 0 # Don't retry failed runs
+  backoffLimit: 0
   template:
     spec:
       containers:
@@ -12,7 +12,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: ENV
-              value: "qa"
+              value: "qa"  # Change this to qa/dev/prod at runtime
             - name: CI
               value: "true"
           command: ["pytest"]
@@ -20,8 +20,9 @@ spec:
             [
               "-v",
               "--env",
-              "qa",
+              "$(ENV)",  # Use the env var dynamically
               "--maxfail=1",
               "--disable-warnings"
             ]
       restartPolicy: Never
+
