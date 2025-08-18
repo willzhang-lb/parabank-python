@@ -124,13 +124,11 @@ def page(context, env_config):
     yield page
     page.close()
 
-
-# def pytest_addoption(parser):
-#     parser.addoption("--envfile", action="store", default=".env", help="Environment file to load")
-#
-#
-# def pytest_configure(config):
-#     envfile = config.getoption("envfile")
-#     load_dotenv(dotenv_path=envfile)
-#     # global BASE_URL
-#     # BASE_URL = os.getenv('BASE_URL')
+@pytest.fixture(scope="function")
+def fresh_page(context, env_config):
+    base_url = env_config['Baseurl']
+    context.clear_cookies()
+    fresh_page = context.new_page()
+    fresh_page.goto(base_url)
+    yield fresh_page
+    fresh_page.close()

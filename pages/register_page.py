@@ -7,7 +7,6 @@ from utils import generate_username, dump_to_json, load_json_file_info
 class RegisterPage(BasePage):
     def __init__(self, page, env_config):
         super().__init__(page, env_config)
-        page.goto(f"{self.base_url}/register.htm")
 
     def fill_register_info(self):
         dump_to_json('data/member_info.json', 'Username', self.random_username)

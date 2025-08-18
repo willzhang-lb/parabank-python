@@ -10,8 +10,9 @@ from pages.find_transactions_page import FindTransactionsPage
 new_account = ''
 transfer_amount = '1'
 
-def test_register(page, env_config):
-    register_page = RegisterPage(page, env_config)
+def test_register(fresh_page, env_config):
+    register_page = RegisterPage(fresh_page, env_config)
+    register_page.click_register()
     register_page.fill_register_info()
     register_page.verify_register_success()
 
